@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { firebaseRegistration } from "../firebase";
+import {
+  loginReginitialState,
+  loginRegReducer,
+  passwordValidator,
+} from "../helpers";
 
 const SignUp = () => {
-  const [signupErr, setSignupErr] = useState("");
+  const [RegistrationResult, dispatch] = useReducer(
+    loginRegReducer,
+    loginReginitialState
+  );
+
   const [userInput, setUserInputs] = useState<{
     name: string;
     email: string;
@@ -18,16 +27,19 @@ const SignUp = () => {
   };
   const handleRegistration = (e) => {
     e.preventDefault();
-
-    firebaseRegistration(userInput, setSignupErr).finally(() => {
-      alert("ok");
-      console.log();
-    });
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
+    if (passwordValidator(userInput.password)) {
+      firebaseRegistration(userInput, dispatch).finally(() => {
+        console.log();
+      });
+    } else {
+      dispatch({
+        type: "error",
+        payload:
+          "auth/password must contain at least an uppercase letter, a lowercase letter, a number and a special character",
+      });
+    }
   };
-  
+
   return (
     <form onSubmit={(e) => handleRegistration(e)}>
       <input
@@ -38,7 +50,6 @@ const SignUp = () => {
         onChange={handleChange}
         placeholder="John Doe"
       />
-      <span>{signupErr.substr(5)}</span>
       <input
         type="email"
         name="email"
@@ -48,13 +59,16 @@ const SignUp = () => {
         placeholder="example@email.com"
       />
       <input
+        required
         type="password"
         name="password"
         id="password"
+        minLength={8}
         value={userInput.password}
         onChange={handleChange}
         placeholder="******"
       />
+      <small>{RegistrationResult?.message.substr(5).replace(/-/g, " ")}</small>
       <button type="submit">SignUp</button>
     </form>
   );

@@ -32,16 +32,22 @@ const sendForgetPassEmail = (email): void => {
         });
 }
 
-const firebaseRegistration = async ({ email, password, name }, setSignupErr): Promise<any> => {
+const firebaseRegistration = async ({ email, password, name }, dispatch): Promise<any> => {
     return await createUserWithEmailAndPassword(auth, email, password)
         .then(async (result) => {
             await updateProfile(auth.currentUser, {
                 displayName: name,
             })
-            console.log(result);
+            console.log(result)
+            dispatch({
+                type: 'success',
+                payload: 'auth/Registration Success, Please Login'
+            })
         }).catch((error) => {
-            setSignupErr(error.code)
-            console.log(error.code);
+            dispatch({
+                type: 'error',
+                payload: error.code
+            })
         });
 };
 

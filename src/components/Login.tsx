@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { firebaseLogin } from "../firebase";
+import { loginReginitialState, loginRegReducer } from "../helpers";
 
 const Login = () => {
+  const [LoginResult, dispatch] = useReducer(
+    loginRegReducer,
+    loginReginitialState
+  );
   const [userInput, setUserInputs] = useState<{
     email: string;
     password: string;
@@ -20,10 +25,18 @@ const Login = () => {
 
     firebaseLogin(email, password)
       .then((userCredential) => {
-        console.log(userCredential.user);
+        dispatch({
+          type: "success",
+          payload: "auth/Login Success",
+        });
+        // console.log(userCredential.user);
       })
       .catch((error) => {
-        console.log(error.message, error.code);
+        dispatch({
+          type: "error",
+          payload: error.code,
+        });
+        // console.log(error.message, error.code);
       });
   };
   return (
@@ -37,13 +50,16 @@ const Login = () => {
         placeholder="example@email.com"
       />
       <input
+        required
         type="password"
         name="password"
         id="password"
+        // minLength={8}
         value={userInput.password}
         onChange={handleChange}
         placeholder="*****"
       />
+      <small>{LoginResult?.message.substr(5).replace(/-/g, "")}</small>
       <button type="submit">Login</button>
     </form>
   );
