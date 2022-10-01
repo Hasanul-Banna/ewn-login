@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useState } from "react";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
-function App() {
+const App: FC = () => {
+  const [isloginTab, setIsLoginTab] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="home">
+      <div className="login-form">
+        {["Login", "Sign Up"].map((item, index) => (
+          <span
+            className={`tab-title ${
+              index === (isloginTab ? 0 : 1) && "tab-toggle"
+            }`}
+            key={index}
+            onClick={() => setIsLoginTab(index === 0)}
+          >
+            {item}
+          </span>
+        ))}
+        <div>{isloginTab ? <Login /> : <SignUp />}</div>
+      </div>
+    </main>
   );
-}
+};
 
 export default App;
