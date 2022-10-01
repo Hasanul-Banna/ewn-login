@@ -30,6 +30,7 @@ body {
 .home {
   min-height: 100vh;
   display: flex;
+  margin: 0% 5%;
   align-items: center;
 }
 .login-form {
@@ -41,6 +42,23 @@ body {
   margin: auto;
   box-shadow: 0px 0px 20px 3px #20897f;
 }
+.alert {
+  display: block;
+  transition: 0.2s ease;
+  padding: 5px;
+  border-radius: 3px;
+  margin: bold;
+  margin: 10px 0px;
+}
+.success-alert {
+  border: 1px solid green;
+  color: greenyellow;
+}
+.error-alert {
+  border: 1px solid red;
+  color: red;
+}
+
 form {
   padding: 5% 10%;
 }
@@ -54,6 +72,7 @@ input {
   padding: 10px;
   border: none;
   margin: 10px 0px;
+  transition: all 0.4s ease;
   border-bottom: 1px solid gray;
 }
 input:hover,
@@ -68,5 +87,13 @@ button {
   color: white;
   background: #1cb6a6;
   border: none;
+  transition: transform 0.2s ease;
   border-radius: 5px;
+}
+button:hover {
+  transform: scale(1.05);
+}
+button:disabled {
+  background: #cccccc;
+  color: #666666;
 }

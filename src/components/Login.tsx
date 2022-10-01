@@ -7,6 +7,7 @@ const Login = () => {
     loginRegReducer,
     loginReginitialState
   );
+  const [isLoading, setLoading] = useState(false);
   const [userInput, setUserInputs] = useState<{
     email: string;
     password: string;
@@ -21,8 +22,10 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    dispatch({ type: "reset" });
     const { email, password } = userInput;
 
+    setLoading(true);
     firebaseLogin(email, password)
       .then((userCredential) => {
         dispatch({
@@ -37,6 +40,9 @@ const Login = () => {
           payload: error.code,
         });
         // console.log(error.message, error.code);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
@@ -59,8 +65,20 @@ const Login = () => {
         onChange={handleChange}
         placeholder="*****"
       />
-      <small>{LoginResult?.message.substr(5).replace(/-/g, " ")}</small>
-      <button type="submit">Login</button>
+      <small
+        className={`${
+          LoginResult.isSuccess === true
+            ? "alert success-alert"
+            : LoginResult.isSuccess === false
+            ? "alert error-alert"
+            : ""
+        }`}
+      >
+        {LoginResult?.message.substr(5).replace(/-/g, " ")}
+      </small>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Loading.." : "Submit"}
+      </button>
     </form>
   );
 };

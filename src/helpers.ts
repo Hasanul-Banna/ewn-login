@@ -3,7 +3,7 @@ const passwordValidator = (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     return passwordRegex.test(password)
 }
-const loginReginitialState = { isSuccess: false, message: "" };
+const loginReginitialState = { isSuccess: null, message: "" };
 
 const loginRegReducer = (state, action) => {
     switch (action.type) {
@@ -11,6 +11,8 @@ const loginRegReducer = (state, action) => {
             return { isSuccess: true, message: action.payload };
         case "error":
             return { isSuccess: false, message: action.payload };
+        case "reset":
+            return loginReginitialState
     }
 };
 

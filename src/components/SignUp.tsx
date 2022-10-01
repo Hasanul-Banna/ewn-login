@@ -11,7 +11,7 @@ const SignUp = () => {
     loginRegReducer,
     loginReginitialState
   );
-
+  const [isLoading, setLoading] = useState(false);
   const [userInput, setUserInputs] = useState<{
     name: string;
     email: string;
@@ -27,15 +27,18 @@ const SignUp = () => {
   };
   const handleRegistration = (e) => {
     e.preventDefault();
+    dispatch({ type: "reset" });
+
     if (passwordValidator(userInput.password)) {
+      setLoading(true);
       firebaseRegistration(userInput, dispatch).finally(() => {
-        console.log();
+        setLoading(false);
       });
     } else {
       dispatch({
         type: "error",
         payload:
-          "auth/password must contain at least an uppercase letter, a lowercase letter, a number and a special character",
+          "auth/password must contain at least an uppercase letter, a lowercase letter, a number and a special character (ex. Pass@123)",
       });
     }
   };
@@ -68,8 +71,20 @@ const SignUp = () => {
         onChange={handleChange}
         placeholder="******"
       />
-      <small>{RegistrationResult?.message.substr(5).replace(/-/g, " ")}</small>
-      <button type="submit">Sign Up</button>
+      <small
+        className={`${
+          RegistrationResult.isSuccess === true
+            ? "alert success-alert"
+            : RegistrationResult.isSuccess === false
+            ? "alert error-alert"
+            : ""
+        }`}
+      >
+        {RegistrationResult?.message.substr(5).replace(/-/g, " ")}
+      </small>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Loading.." : "Submit"}
+      </button>
     </form>
   );
 };
