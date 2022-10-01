@@ -69,7 +69,7 @@ const SignUp = () => {
         placeholder="******"
       />
       <small>{RegistrationResult?.message.substr(5).replace(/-/g, " ")}</small>
-      <button type="submit">SignUp</button>
+      <button type="submit">Sign Up</button>
     </form>
   );
 };

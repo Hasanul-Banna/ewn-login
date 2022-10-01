@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +23,7 @@ body {
   position: absolute;
   height: 2px;
   width: 50%;
-  bottom: 5px;
+  bottom: 10px;
   left: 25%;
   background: #07f4dd;
 }
@@ -40,4 +40,33 @@ body {
   position: relative;
   margin: auto;
   box-shadow: 0px 0px 20px 3px #20897f;
+}
+form {
+  padding: 5% 10%;
+}
+input {
+  background: transparent;
+  color: white;
+  outline: none;
+  height: 40px;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  margin: 10px 0px;
+  border-bottom: 1px solid gray;
+}
+input:hover,
+input:focus {
+  border-bottom: 1px solid cyan;
+}
+button {
+  display: block;
+  cursor: pointer;
+  margin: auto;
+  padding: 5px 15px;
+  color: white;
+  background: #1cb6a6;
+  border: none;
+  border-radius: 5px;
 }

@@ -59,7 +59,7 @@ const Login = () => {
         onChange={handleChange}
         placeholder="*****"
       />
-      <small>{LoginResult?.message.substr(5).replace(/-/g, "")}</small>
+      <small>{LoginResult?.message.substr(5).replace(/-/g, " ")}</small>
       <button type="submit">Login</button>
     </form>
   );
