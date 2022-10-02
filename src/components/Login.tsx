@@ -3,7 +3,7 @@ import { firebaseLogin, sendForgetPassEmail } from "../utilities/firebase";
 import { loginReginitialState, loginRegReducer } from "../utilities/helpers";
 import PasswordInput from "./PasswordInput";
 
-const Login = () => {
+function Login() {
   const [LoginResult, dispatch] = useReducer(
     loginRegReducer,
     loginReginitialState,
@@ -45,7 +45,7 @@ const Login = () => {
 
     setLoading(true);
     firebaseLogin(email, password)
-      .then((userCredential) => {
+      .then(() => {
         dispatch({
           type: "success",
           payload: "auth/Login Success",
@@ -134,6 +134,6 @@ const Login = () => {
       </button>
     </form>
   );
-};
+}
 
 export default Login;

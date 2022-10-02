@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 
-const App: FC = () => {
+function App() {
   const [isloginTab, setIsLoginTab] = useState(true);
   return (
     <main className="home">
@@ -12,7 +12,7 @@ const App: FC = () => {
             className={`tab-title ${
               index === (isloginTab ? 0 : 1) && "tab-toggle"
             }`}
-            key={index}
+            key={item}
             onClick={() => setIsLoginTab(index === 0)}
           >
             {item}
@@ -22,6 +22,6 @@ const App: FC = () => {
       </div>
     </main>
   );
-};
+}
 
 export default App;

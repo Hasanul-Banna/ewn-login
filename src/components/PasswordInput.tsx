@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Eye, EyeSlash } from "../utilities/Icons";
 
-const PasswordInput = ({ value, handleChange }) => {
+interface PasswordInputPropTypes {
+  value: string;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+}
+function PasswordInput({ value, handleChange }: PasswordInputPropTypes) {
   const [showPass, setShowPass] = useState<boolean>(false);
 
   const handleShowPass = () => {
@@ -33,6 +37,6 @@ const PasswordInput = ({ value, handleChange }) => {
       )}
     </div>
   );
-};
+}
 
 export default PasswordInput;

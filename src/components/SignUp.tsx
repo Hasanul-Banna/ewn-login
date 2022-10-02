@@ -7,7 +7,7 @@ import {
 } from "../utilities/helpers";
 import PasswordInput from "./PasswordInput";
 
-const SignUp = () => {
+function SignUp() {
   const [RegistrationResult, dispatch] = useReducer(
     loginRegReducer,
     loginReginitialState,
@@ -81,6 +81,6 @@ const SignUp = () => {
       </button>
     </form>
   );
-};
+}
 
 export default SignUp;
