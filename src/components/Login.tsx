@@ -4,18 +4,20 @@ import { loginReginitialState, loginRegReducer } from "../utilities/helpers";
 import PasswordInput from "./PasswordInput";
 
 function Login() {
+  const rememberedEmailPass: {
+    email?: string;
+    password?: string;
+  } = JSON.parse(localStorage.getItem("rememberedEmailPass"));
+
   const [LoginResult, dispatch] = useReducer(
     loginRegReducer,
     loginReginitialState,
   );
   const [isLoading, setLoading] = useState<boolean>(false);
   const [sendingEmail, setSendingEmail] = useState<boolean>(false);
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-
-  const rememberedEmailPass: {
-    email?: string;
-    password?: string;
-  } = JSON.parse(localStorage.getItem("rememberedEmailPass"));
+  const [rememberMe, setRememberMe] = useState<boolean>(
+    !!rememberedEmailPass?.email,
+  );
 
   const [userInput, setUserInputs] = useState<{
     email: string;
