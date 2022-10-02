@@ -1,6 +1,6 @@
 import React, { useState, useReducer } from "react";
-import { firebaseLogin } from "../firebase";
-import { loginReginitialState, loginRegReducer } from "../helpers";
+import { firebaseLogin, sendForgetPassEmail } from "../utilities/firebase";
+import { loginReginitialState, loginRegReducer } from "../utilities/helpers";
 
 const Login = () => {
   const [LoginResult, dispatch] = useReducer(
@@ -8,11 +8,12 @@ const Login = () => {
     loginReginitialState
   );
   const [isLoading, setLoading] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
   const [userInput, setUserInputs] = useState<{
     email: string;
     password: string;
   }>({
-    email: "banna@gmail.com",
+    email: "hasanulbanna006@gmail.com",
     password: "121212",
   });
 
@@ -45,15 +46,38 @@ const Login = () => {
         setLoading(false);
       });
   };
+
+  const handleForgetPass = () => {
+    dispatch({ type: "reset" });
+    setSendingEmail(true);
+    sendForgetPassEmail(userInput.email)
+      .then(() => {
+        dispatch({
+          type: "success",
+          payload:
+            "auth/Please check your email inbox or spam box for password reset link.",
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "error",
+          payload: error.code,
+        });
+      })
+      .finally(() => {
+        setSendingEmail(false);
+      });
+  };
   return (
     <form onSubmit={(e) => handleLogin(e)}>
       <input
+        required
         type="email"
         name="email"
         id="email"
         value={userInput.email}
         onChange={handleChange}
-        placeholder="example@email.com"
+        placeholder="Email Address"
       />
       <input
         required
@@ -63,8 +87,24 @@ const Login = () => {
         // minLength={8}
         value={userInput.password}
         onChange={handleChange}
-        placeholder="*****"
+        placeholder="●●●●●●●●"
       />
+      <div className="d-flex">
+        <div className="Remember">
+          <input type="checkbox" name="Remember" id="Remember" />
+          &nbsp;
+          <label htmlFor="Remember">
+            <small>Remember me</small>
+          </label>
+        </div>
+        {!sendingEmail ? (
+          <small className="forgot-pass" onClick={handleForgetPass}>
+            Forgot password?
+          </small>
+        ) : (
+          <small style={{ marginTop: "4px" }}>Sending email...</small>
+        )}
+      </div>
       <small
         className={`${
           LoginResult.isSuccess === true

@@ -10,6 +10,10 @@ body {
   color: white;
   background: linear-gradient(#232b3d, #298d83);
 }
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+}
 .tab-title {
   width: 50%;
   display: inline-block;
@@ -62,7 +66,7 @@ body {
 form {
   padding: 5% 10%;
 }
-input {
+input:not([type="checkbox"]) {
   background: transparent;
   color: white;
   outline: none;
@@ -75,14 +79,23 @@ input {
   transition: all 0.4s ease;
   border-bottom: 1px solid gray;
 }
-input:hover,
-input:focus {
+input:not([type="checkbox"]):hover,
+input:not([type="checkbox"]):focus {
   border-bottom: 1px solid cyan;
+}
+input[type="checkbox"] {
+  accent-color: #1cb6a6;
+  cursor: pointer;
+  height: 12px;
+}
+.Remember label {
+  cursor: pointer;
+  user-select: none;
 }
 button {
   display: block;
   cursor: pointer;
-  margin: auto;
+  margin: 20px auto;
   padding: 5px 15px;
   color: white;
   background: #1cb6a6;
@@ -96,4 +109,10 @@ button:hover {
 button:disabled {
   background: #cccccc;
   color: #666666;
+}
+.forgot-pass {
+  margin-top: 4px;
+  color: cyan;
+  text-decoration: underline;
+  cursor: pointer;
 }

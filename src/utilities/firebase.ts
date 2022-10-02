@@ -22,14 +22,8 @@ const firebaseLogin = async (email, password): Promise<any> => {
     return await signInWithEmailAndPassword(auth, email, password)
 }
 
-const sendForgetPassEmail = (email): void => {
-    sendPasswordResetEmail(auth, email)
-        .then(() => {
-            console.log('success');
-        })
-        .catch((error) => {
-            console.log(error.message, error.code);
-        });
+const sendForgetPassEmail = async (email): Promise<any> => {
+    return await sendPasswordResetEmail(auth, email)
 }
 
 const firebaseRegistration = async ({ email, password, name }, dispatch): Promise<any> => {

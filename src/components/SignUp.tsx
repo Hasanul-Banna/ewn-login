@@ -1,10 +1,10 @@
 import React, { useReducer, useState } from "react";
-import { firebaseRegistration } from "../firebase";
+import { firebaseRegistration } from "../utilities/firebase";
 import {
   loginReginitialState,
   loginRegReducer,
   passwordValidator,
-} from "../helpers";
+} from "../utilities/helpers";
 
 const SignUp = () => {
   const [RegistrationResult, dispatch] = useReducer(
@@ -46,20 +46,22 @@ const SignUp = () => {
   return (
     <form onSubmit={(e) => handleRegistration(e)}>
       <input
+        required
         type="text"
         name="name"
         id="name"
         value={userInput.name}
         onChange={handleChange}
-        placeholder="John Doe"
+        placeholder="Fullname"
       />
       <input
+        required
         type="email"
         name="email"
         id="email"
         value={userInput.email}
         onChange={handleChange}
-        placeholder="example@email.com"
+        placeholder="Email Address"
       />
       <input
         required
@@ -69,7 +71,7 @@ const SignUp = () => {
         minLength={8}
         value={userInput.password}
         onChange={handleChange}
-        placeholder="******"
+        placeholder="●●●●●●●●"
       />
       <small
         className={`${
