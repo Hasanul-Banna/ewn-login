@@ -1,15 +1,16 @@
-import React, { useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import { firebaseRegistration } from "../utilities/firebase";
 import {
   loginReginitialState,
   loginRegReducer,
-  passwordValidator,
+  passwordValidator
 } from "../utilities/helpers";
+import PasswordInput from "./PasswordInput";
 
 const SignUp = () => {
   const [RegistrationResult, dispatch] = useReducer(
     loginRegReducer,
-    loginReginitialState
+    loginReginitialState,
   );
   const [isLoading, setLoading] = useState(false);
   const [userInput, setUserInputs] = useState<{
@@ -17,9 +18,9 @@ const SignUp = () => {
     email: string;
     password: string;
   }>({
-    name: "Hasanul Banna",
-    email: "hasanulbanna006@gmail.com",
-    password: "121212",
+    name: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -63,16 +64,7 @@ const SignUp = () => {
         onChange={handleChange}
         placeholder="Email Address"
       />
-      <input
-        required
-        type="password"
-        name="password"
-        id="password"
-        minLength={8}
-        value={userInput.password}
-        onChange={handleChange}
-        placeholder="●●●●●●●●"
-      />
+      <PasswordInput value={userInput.password} handleChange={handleChange} />
       <small
         className={`${
           RegistrationResult.isSuccess === true

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 

@@ -1,30 +1,45 @@
-import React, { useState, useReducer } from "react";
+import { useReducer, useState } from "react";
 import { firebaseLogin, sendForgetPassEmail } from "../utilities/firebase";
 import { loginReginitialState, loginRegReducer } from "../utilities/helpers";
+import PasswordInput from "./PasswordInput";
 
 const Login = () => {
   const [LoginResult, dispatch] = useReducer(
     loginRegReducer,
-    loginReginitialState
+    loginReginitialState,
   );
   const [isLoading, setLoading] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const rememberedEmailPass = JSON.parse(
+    localStorage.getItem("rememberedEmailPass"),
+  );
+
   const [userInput, setUserInputs] = useState<{
     email: string;
     password: string;
   }>({
-    email: "hasanulbanna006@gmail.com",
-    password: "121212",
+    email: rememberedEmailPass?.email || "",
+    password: rememberedEmailPass?.password || "",
   });
+  const { email, password } = userInput;
 
   const handleChange = (e) => {
     setUserInputs({ ...userInput, [e.target.name]: e.target.value });
   };
-
+  const handleRememberMe = () => {
+    if (rememberMe) {
+      localStorage.setItem(
+        "rememberedEmailPass",
+        JSON.stringify({ email, password }),
+      );
+    } else {
+      localStorage.removeItem("rememberedEmailPass");
+    }
+  };
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch({ type: "reset" });
-    const { email, password } = userInput;
 
     setLoading(true);
     firebaseLogin(email, password)
@@ -33,14 +48,13 @@ const Login = () => {
           type: "success",
           payload: "auth/Login Success",
         });
-        // console.log(userCredential.user);
+        handleRememberMe();
       })
       .catch((error) => {
         dispatch({
           type: "error",
           payload: error.code,
         });
-        // console.log(error.message, error.code);
       })
       .finally(() => {
         setLoading(false);
@@ -79,19 +93,16 @@ const Login = () => {
         onChange={handleChange}
         placeholder="Email Address"
       />
-      <input
-        required
-        type="password"
-        name="password"
-        id="password"
-        // minLength={8}
-        value={userInput.password}
-        onChange={handleChange}
-        placeholder="●●●●●●●●"
-      />
+      <PasswordInput value={userInput.password} handleChange={handleChange} />
       <div className="d-flex">
         <div className="Remember">
-          <input type="checkbox" name="Remember" id="Remember" />
+          <input
+            type="checkbox"
+            name="Remember"
+            id="Remember"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
           &nbsp;
           <label htmlFor="Remember">
             <small>Remember me</small>

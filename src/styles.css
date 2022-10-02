@@ -8,11 +8,13 @@
 }
 body {
   color: white;
+  user-select: none !important;
   background: linear-gradient(#232b3d, #298d83);
 }
 .d-flex {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .tab-title {
   width: 50%;
@@ -65,6 +67,9 @@ body {
 
 form {
   padding: 5% 10%;
+}
+svg {
+  cursor: pointer;
 }
 input:not([type="checkbox"]) {
   background: transparent;
