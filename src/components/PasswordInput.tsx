@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Eye, EyeSlash } from "../utilities/Icons";
 
 const PasswordInput = ({ value, handleChange }) => {
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState<boolean>(false);
+
   const handleShowPass = () => {
     setShowPass((show) => !show);
     const x = document.getElementById("password") as HTMLInputElement;

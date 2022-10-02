@@ -3,7 +3,7 @@ import { firebaseRegistration } from "../utilities/firebase";
 import {
   loginReginitialState,
   loginRegReducer,
-  passwordValidator
+  passwordValidator,
 } from "../utilities/helpers";
 import PasswordInput from "./PasswordInput";
 
@@ -23,10 +23,10 @@ const SignUp = () => {
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInputs({ ...userInput, [e.target.name]: e.target.value });
   };
-  const handleRegistration = (e) => {
+  const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: "reset" });
 

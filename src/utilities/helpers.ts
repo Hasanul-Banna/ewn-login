@@ -3,9 +3,19 @@ const passwordValidator = (password) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
   return passwordRegex.test(password)
 }
-const loginReginitialState = { isSuccess: null, message: '' }
 
-const loginRegReducer = (state, action) => {
+interface State {
+  isSuccess: boolean | null;
+  message: string;
+}
+
+type Action = {
+  type: "success" | "error" | "reset";
+  payload?: string;
+}
+const loginReginitialState: State = { isSuccess: null, message: '' }
+
+const loginRegReducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'success':
       return { isSuccess: true, message: action.payload }

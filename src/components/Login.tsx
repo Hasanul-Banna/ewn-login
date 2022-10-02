@@ -8,12 +8,14 @@ const Login = () => {
     loginRegReducer,
     loginReginitialState,
   );
-  const [isLoading, setLoading] = useState(false);
-  const [sendingEmail, setSendingEmail] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const rememberedEmailPass = JSON.parse(
-    localStorage.getItem("rememberedEmailPass"),
-  );
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [sendingEmail, setSendingEmail] = useState<boolean>(false);
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+  const rememberedEmailPass: {
+    email?: string;
+    password?: string;
+  } = JSON.parse(localStorage.getItem("rememberedEmailPass"));
 
   const [userInput, setUserInputs] = useState<{
     email: string;
@@ -24,7 +26,7 @@ const Login = () => {
   });
   const { email, password } = userInput;
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInputs({ ...userInput, [e.target.name]: e.target.value });
   };
   const handleRememberMe = () => {
@@ -37,7 +39,7 @@ const Login = () => {
       localStorage.removeItem("rememberedEmailPass");
     }
   };
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: "reset" });
 
